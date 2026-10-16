@@ -109,3 +109,7 @@ As opções `--output`, `--sheet`, `--size`, `--dpi` e `--transparent` estão di
 ## Estrutura
 
 O backend fica diretamente em `src`, com rotas em `api.py`, processamento em `processor.py`, composição em `layout.py` e comandos em `cli.py`. O frontend fica em `src/templates` e `src/static`, sendo servido pelo FastAPI com HTML, CSS e JavaScript nativos.
+
+## License
+
+[MIT](LICENSE)
