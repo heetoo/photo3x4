@@ -11,12 +11,11 @@ from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 from PIL import Image
 
+from .observability import init_sentry
 from .processor import process_for_sheet, process_image
 from .utils import image_to_jpeg
 
 BASE_DIR = Path(__file__).parent
-app = FastAPI(title="photo3x4", version="0.1.0")
-app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 
 
 def git_revision() -> str:
@@ -33,6 +32,11 @@ def git_revision() -> str:
         ).strip()
     except (OSError, subprocess.CalledProcessError):
         return "dev"
+
+
+init_sentry(release=git_revision())
+app = FastAPI(title="photo3x4", version="0.1.0")
+app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 
 
 @app.get("/", response_class=HTMLResponse)

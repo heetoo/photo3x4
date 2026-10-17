@@ -89,6 +89,18 @@ docker compose down
 
 Ao acessar pelo celular usando o IP do computador, a câmera pode exigir HTTPS. Nesse caso, configure um proxy local com certificado ou use uma origem segura compatível com o navegador.
 
+## Monitoramento de erros (opcional)
+
+O servidor web integra o [Sentry](https://sentry.io), mas ele só liga quando a variável `SENTRY_DSN` está definida. Sem ela, nada é enviado para fora. A versão online usa o Sentry para registrar erros e uma amostra pequena de requisições. As fotos nunca são anexadas aos eventos (`max_request_body_size="never"`) e dados pessoais não são coletados (`send_default_pii=False`).
+
+| Variável | Padrão | Uso |
+| --- | --- | --- |
+| `SENTRY_DSN` | vazia | Liga o Sentry |
+| `SENTRY_ENVIRONMENT` | `production` | Ambiente dos eventos |
+| `SENTRY_TRACES_SAMPLE_RATE` | `0.05` | Fração de requisições com trace (health check e estáticos ficam de fora) |
+
+O `release` dos eventos usa o mesmo `APP_GIT_SHA` dos assets.
+
 ## CLI
 
 ```bash
